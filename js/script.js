@@ -9,7 +9,7 @@ function createGrid(size) {
     while (total_cells > 1) {
         const cell = document.createElement(`div`);
         cell.style.flex = `1`;
-        cell.style.flexBasis = `${width/size}px`;
+        cell.style.flexBasis = `${width / size}px`;
         cell.style.boxSizing = `border-box`;
         cell.style.border = `1px red solid`;
         cell.classList.add(`cell`);
@@ -18,20 +18,32 @@ function createGrid(size) {
     }
 }
 
-function resizeGrid(){
+function resizeGrid() {
     let size = prompt(`Write an even number from 12-64 for grid size`);
     createGrid(size);
 }
 
-function paint(colour){
-    const cells = document.querySelectorAll(`.grid`);
-    
-    cells.forEach((cell)=>{
-        cell.addEventListener(`mouseover`,(e)=>{
-             e.target.style.backgroundColor =  `blue`;
-        });
+function paint() {
+    const cells = document.querySelectorAll(`.cell`);
+    const grid = document.querySelector(`.grid`);
+
+
+    function colourCell(e) {
+        e.target.style.backgroundColor = `blue`;
+    }
+
+    grid.addEventListener(`mousedown`, (e) => {
+        colourCell(e);
+        grid.addEventListener(`mouseover`, colourCell);
+        e.stopPropagation();
     });
-    
+
+    grid.addEventListener(`mouseup`, (e) => {
+        grid.removeEventListener(`mouseover`, colourCell, {});
+        e.stopPropagation();
+    });
+
+
 }
 
 createGrid(12);
