@@ -19,12 +19,36 @@ function createGrid(size) {
 }
 
 function resizeGrid() {
-    let size = prompt(`Write an even number from 12-64 for grid size`);
-    createGrid(size);
+    let size = ``;
+    const size_btn = document.querySelector(`.grid_size_btn`);
+
+    size_btn.addEventListener(`click`, () => {
+        size = prompt(`Write an even number from 12-64 for grid size`);
+
+        while (size % 2 || size < 12 || size > 64 || isNaN(size))  {
+            console.log(size)
+            size = prompt(`Write an even number from 12-64 for grid size`);
+        }
+
+        removeGrid();
+        createGrid(size);
+    });
+
+    function removeGrid() {
+        const cells = document.querySelectorAll(`.cell`);
+        const grid = document.querySelector(`.grid`);
+
+        cells.forEach((cell) => {
+            grid.removeChild(cell);
+        });
+    }
 }
 
+
+
+
 function paint() {
-    const cells = document.querySelectorAll(`.cell`);
+    // const cells = document.querySelectorAll(`.cell`);
     const grid = document.querySelector(`.grid`);
 
 
@@ -43,8 +67,8 @@ function paint() {
         e.stopPropagation();
     });
 
-
 }
 
-createGrid(12);
+createGrid(16);
 paint();
+resizeGrid();
