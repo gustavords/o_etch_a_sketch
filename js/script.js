@@ -44,9 +44,6 @@ function resizeGrid() {
     }
 }
 
-
-
-
 function paint() {
     // const cells = document.querySelectorAll(`.cell`);
     const grid = document.querySelector(`.grid`);
